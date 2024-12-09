@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>요리 레시피</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            width: 100%;
+            height: 15%;
+            background-color: #eacff1;
+        }
+
+        h1 {
+            font-size: 3.5em;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .name {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            font-size: 1.5em;
+            margin: 0 30px;
+        }
+
+        section {
+            padding: 50px 20px;
+            margin-bottom: 30px;
+        }
+
+        #noodles, #rice, #side-dishes {
+            background-color: #fff5f8;
+        }
+
+        .recipe-section {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .recipe-item {
+            background-color: #fff;
+            padding: 20px;
+            width: 600px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .recipe-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .ingredient {
+            color: rgb(255, 0, 0);
+            font-weight: bold;
+        }
+
+        .recipe-item h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .recipe-item p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .like-button {
+            font-size: 1.2em;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #ff6b6b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .like-button:hover {
+            background-color: #ff3b3b;
+        }
+
+        .like-count {
+            font-size: 1.2em;
+            margin-left: 10px;
+            color: #333;
+        }
+
+        .add-recipe-btn {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            color: #fff;
+            background-color: #394052;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .add-recipe-btn:hover {
+            background-color: #a2cfa2;
+        }
+
+        .form-container {
+            display: none;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 50px auto;
+            width: 60%;
+        }
+
+        .form-container input,
+        .form-container textarea,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #394052;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #a2cfa2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>자취 요리 레시피를 공유합니다!</h1>
+        <div class="name">202002137 김경옥</div>
+    </header>
+    
+    <section>
+        <h2>재료가 적고 10~15분 내에 만들 수 있는 간편 요리를 추천합니다.</h2>
+    </section>
+
+    <nav>
+        <ul>
+            <li><a href="#noodles">면류</a></li>
+            <li><a href="#rice">밥류</a></li>
+            <li><a href="#side-dishes">반찬류</a></li>
+        </ul>
+    </nav>
+
+    <button class="add-recipe-btn" onclick="showForm()">레시피 등록하기</button>
+
+    <!-- 레시피 작성 폼 -->
+    <div class="form-container" id="recipe-form">
+        <h2>레시피 등록</h2>
+        <label for="category">카테고리 선택:</label>
+        <select id="category">
+            <option value="noodles">면류</option>
+            <option value="rice">밥류</option>
+            <option value="side-dishes">반찬류</option>
+        </select>
+        <label for="title">레시피 제목:</label>
+        <input type="text" id="title" placeholder="레시피 제목을 입력하세요">
+        <label for="ingredients">재료:</label>
+        <textarea id="ingredients" rows="4" placeholder="재료를 입력하세요"></textarea>
+        <label for="steps">조리법:</label>
+        <textarea id="steps" rows="6" placeholder="조리법을 입력하세요"></textarea>
+        <label for="image">사진 업로드:</label>
+        <input type="file" id="image" accept="image/*">
+        <button onclick="addRecipe()">레시피 추가</button>
+        <button onclick="hideForm()">취소</button>
+    </div>
+
+    <section id="noodles">
+        <h1>[ 면 류 ]</h1>
+        <div class="recipe-section" id="noodles-recipes">
+            <div class="recipe-item">
+                <h2>간장 파스타</h2>
+                <img src="/간장파스타.jpg" alt="간장 파스타">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 파스타면, 양파, 청양고추, 햄, 버섯, 올리브유, 간장, 다진마늘, 올리고당<br></span>
+                    1. 파스타면 7분간 삶아주기<br>
+                    2. 간장 3스푼, 올리고당 6스푼, 다진마늘 1스푼을 섞어 소스 만들어주기<br>
+                    3. 올리브유를 두른 팬에 야채와 햄, 버섯을 넣고 양파가 반투명해질 때까지 볶아주기<br>
+                    4. 면과 간장 소스를 넣고 양념이 잘 베이도록 볶아주기
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+            <div class="recipe-item">
+                <h2>알리오올리오</h2>
+                <img src="/알리오올리오.jpg" alt="알리오올리오">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 소금, 파스타면, 올리브유, 페페론치노, 편마늘, 다진마늘<br></span>
+                    1. 파스타면 7분간 삶아주기<br>
+                    2. 올리브유 듬뿍 두른 팬에 편마늘 5톨, 다진마늘 1술 볶기<br>
+                    3. 페페론치노 3~5조각을 함께 넣어 달달 볶기<br>
+                    4. 면 넣어 양념이 잘 베이게 볶아주기<br>
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="rice">
+        <h1>[ 밥 류 ]</h1>
+        <div class="recipe-section" id="rice-recipes">
+            <div class="recipe-item">
+                <h2>전자레인지 달걀밥</h2>
+                <img src="/전자렌지달걀밥.jpg" alt="전자레인지 달걀밥">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 계란 2개, 후추, 햄, 파, 간장<br></span>
+                    1. 계란 두 개, 후추 조금, 햄, 파 적당히 넣어 간장 한 스푼과 섞기<br>
+                    2. 랩으로 감싸 전자레인지에 3분 돌리고 위에 치즈 얹기<br>
+                    3. 치즈와 함께 전자레인지 2분 다시 돌리기<br>
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+            <div class="recipe-item">
+                <h2>마늘볶음밥</h2>
+                <img src="/마늘볶음밥.jpg" alt="마늘볶음밥">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 다진마늘, 편마늘, 식용유, 소금, 간장, 버터<br></span>
+                    1. 식용유 3큰술에 다진마늘, 편마늘 넣어 소금 한꼬집과 함께 볶기<br>
+                    2. 간장 2큰술 넣고 밥과 함께 볶다가 가장자리에 버터 조금 녹이기<br>
+                    3. 볶은 편마늘을 후레이크처럼 위에 올려주기<br>
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="side-dishes">
+        <h1>[반 찬 류 ]</h1>
+        <div class="recipe-section" id="side-dishes-recipes">
+            <div class="recipe-item">
+                <h2>메추리알 장조림</h2>
+                <img src="/메추리알장조림.jpg">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 진간장, 설탕, 간마늘, 참기름, 깐메추리알<br></span>
+                    1. 진간장 1컵반, 생수 1컵, 설탕 반컵, 간마늘 1큰술, 참기름 1큰술 섞어 소스 만들기<br>
+                    2. 간장 소스에 깐메추리알 넣고 한번 끓여주기<br>
+                    3. 물이 끓으면 약불로 줄이고 졸여주기<br>
+                    4. 조리 후 식은 상태에서 8시간 냉장 숙성시키기<br>
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+            <div class="recipe-item">
+                <h2>참치쌈장</h2>
+                <img src="/참치쌈장.jpg">
+                <p>
+                    <span class="ingredient">재료 준비<br>
+                    - 참치, 파, 양파, 된장, 고추장, 간마늘, 고춧가루, 설탕<br></span>
+                    1. 참치 기름으로 파, 양파를 볶아 파기름 내기<br>
+                    2. 된장1, 고추장1, 물 반컵 넣어 섞으며 끓이기<br>
+                    3. 간마늘1, 고춧가루1, 설탕1 넣고 졸이기<br>
+                    4. 참치 1캔 넣고 버무리기<br>
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showForm() {
+            document.getElementById('recipe-form').style.display = 'block';
+        }
+
+        function hideForm() {
+            document.getElementById('recipe-form').style.display = 'none';
+        }
+        
+        function addRecipe() {
+            const category = document.getElementById('category').value;
+            const title = document.getElementById('title').value;
+            const ingredients = document.getElementById('ingredients').value;
+            const steps = document.getElementById('steps').value;
+            const image = document.getElementById('image').files[0];
+
+            // 새로운 레시피 아이템 생성
+            const reader = new FileReader();
+            reader.onloadend = function() {
+            const imageUrl = reader.result;
+            const recipeItem = document.createElement('div');
+            recipeItem.classList.add('recipe-item');
+            recipeItem.innerHTML = `
+                <h2>${title}</h2>
+                <img src="${imageUrl}" alt="${title}">
+                <p>
+                    <span class="ingredient">재료 준비<br>-${ingredients}</span><br>
+                    ${steps}
+                </p>
+                <button class="like-button">좋아요</button>
+                <span class="like-count">0</span>
+            `;
+
+            recipeItem.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const likeCount = this.nextElementSibling;
+                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                });
+            });
+
+            // 카테고리별로 추가된 레시피 목록에 아이템 추가
+            document.getElementById(category + '-recipes').appendChild(recipeItem);
+
+            // 레시피 폼 초기화 및 숨기기
+            document.getElementById('recipe-form').reset();
+            hideForm();
+            };
+            
+            if (image) {
+                reader.readAsDataURL(image);
+            } else {
+                alert('이미지를 업로드해주세요.');
+            }
+        }
+    </script>
+
+    <script>
+        document.querySelectorAll('.like-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const likeCount = this.nextElementSibling;
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            });
+        });
+    </script>
+</body>
+</html>
